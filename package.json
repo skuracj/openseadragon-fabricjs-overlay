@@ -1,0 +1,31 @@
+{
+  "name": "openseadragon-fabricjs-overlay",
+  "version": "1.0.0",
+  "description": "This package is a forked version of https://github.com/altert/OpenseadragonFabricjsOverlay",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "browser": {
+    "canvas": false,
+    "fs": false,
+    "jsdom": false,
+    "jsdom/lib/jsdom/living/generated/utils": false,
+    "jsdom/lib/jsdom/utils": false,
+    "http": false,
+    "https": false,
+    "xmldom": false,
+    "url": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skuracj/openseadragon-fabricjs-overlay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skuracj/openseadragon-fabricjs-overlay/issues"
+  },
+  "homepage": "https://github.com/skuracj/openseadragon-fabricjs-overlay#readme"
+}
