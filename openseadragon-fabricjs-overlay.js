@@ -51,6 +51,18 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
    * Overlay object
    * @param viewer
    * @constructor
+   *
+   * Canvas object
+   * @param staticCanvas
+   * @constructor
+   *
+   * Canvas id
+   * @param overlayId
+   * @constructor
+   *
+   * Canvas zIndex
+   * @param zIndex
+   * @constructor
    */
   let Overlay = function (viewer, staticCanvas, overlayId, zIndex) {
     let self = this;
@@ -127,8 +139,6 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
       self.resizeCanvas();
     });
     window.addEventListener("resize", function () {
-      console.log('addEventListenerresize');
-
       self.resize();
       self.resizeCanvas();
     });
