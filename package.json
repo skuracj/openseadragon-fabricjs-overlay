@@ -1,11 +1,33 @@
 {
-  "name": "openseadragon-fabricjs-overlay",
-  "version": "1.0.0",
-  "description": "This package is a forked version of https://github.com/altert/OpenseadragonFabricjsOverlay",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_args": [
+    [
+      "openseadragon-fabricjs-overlay@github:skuracj/openseadragon-fabricjs-overlay#dev",
+      "/Users/cez/Desktop/IBM/DIAC_Frontend"
+    ]
+  ],
+  "_from": "openseadragon-fabricjs-overlay@github:skuracj/openseadragon-fabricjs-overlay#dev",
+  "_id": "openseadragon-fabricjs-overlay@git+ssh://git@github.com/skuracj/openseadragon-fabricjs-overlay.git#7bd9aa38fbc420022392cb011d6335c036e9ad8f",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/openseadragon-fabricjs-overlay",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "openseadragon-fabricjs-overlay@github:skuracj/openseadragon-fabricjs-overlay#dev",
+    "name": "openseadragon-fabricjs-overlay",
+    "escapedName": "openseadragon-fabricjs-overlay",
+    "rawSpec": "github:skuracj/openseadragon-fabricjs-overlay#dev",
+    "saveSpec": "github:skuracj/openseadragon-fabricjs-overlay#dev",
+    "fetchSpec": null,
+    "gitCommittish": "dev"
   },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+ssh://git@github.com/skuracj/openseadragon-fabricjs-overlay.git#7bd9aa38fbc420022392cb011d6335c036e9ad8f",
+  "_spec": "github:skuracj/openseadragon-fabricjs-overlay#dev",
+  "_where": "/Users/cez/Desktop/IBM/DIAC_Frontend",
+  "author": "",
   "browser": {
     "canvas": false,
     "fs": false,
@@ -17,15 +39,21 @@
     "xmldom": false,
     "url": false
   },
+  "bugs": {
+    "url": "https://github.com/skuracj/openseadragon-fabricjs-overlay/issues"
+  },
+  "description": "This package is a forked version of https://github.com/altert/OpenseadragonFabricjsOverlay",
+  "homepage": "https://github.com/skuracj/openseadragon-fabricjs-overlay#readme",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "openseadragon-fabricjs-overlay",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/skuracj/openseadragon-fabricjs-overlay.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/skuracj/openseadragon-fabricjs-overlay/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/skuracj/openseadragon-fabricjs-overlay#readme"
+  "version": "1.0.0"
 }

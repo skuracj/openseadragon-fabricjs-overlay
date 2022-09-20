@@ -7,6 +7,8 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
     console.error("[openseadragon-canvas-overlay] requires OpenSeadragon");
     return;
   }
+  // fabricEraser(fabric);
+
 
   /**
    * Adds fabric.js overlay capability to your OpenSeadragon Viewer
@@ -50,18 +52,6 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
   /**
    * Overlay object
    * @param viewer
-   * @constructor
-   *
-   * Canvas object
-   * @param staticCanvas
-   * @constructor
-   *
-   * Canvas id
-   * @param overlayId
-   * @constructor
-   *
-   * Canvas zIndex
-   * @param zIndex
    * @constructor
    */
   let Overlay = function (viewer, staticCanvas, overlayId, zIndex) {
@@ -139,6 +129,8 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
       self.resizeCanvas();
     });
     window.addEventListener("resize", function () {
+      // console.log('addEventListenerresize');
+
       self.resize();
       self.resizeCanvas();
     });
