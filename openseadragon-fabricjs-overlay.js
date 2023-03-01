@@ -23,11 +23,18 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
    * @param {string} options.containerClass
    *     Used as id for overlay
    *
+   * @param {number} options.zIndex
+   *     z-index of overlay
+   *
+   * @param {boolean} options.resizeOnWidthChange
+   *     Flag used to re-render fabric canvas only on the window width change
+   *     Temp workaround for mobile --vh change
+   *
    * @returns {Overlay}
    */
   OpenSeadragon.Viewer.prototype.fabricjsOverlay = function (options) {
 
-    this._fabricjsOverlayInfo = new Overlay(this, options.static, options.containerClass, options.zIndex);
+    this._fabricjsOverlayInfo = new Overlay(this, options.static, options.containerClass, options.zIndex, options.resizeOnWidthChange);
     if (options && options.scale) {
       this._fabricjsOverlayInfo._scale = options.scale; // arbitrary scale for created fabric canvas
     } else {
@@ -54,7 +61,7 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
    * @param viewer
    * @constructor
    */
-  let Overlay = function (viewer, staticCanvas, overlayId, zIndex) {
+  let Overlay = function (viewer, staticCanvas, overlayId, zIndex, resizeOnWidthChange) {
     let self = this;
 
     this._viewer = viewer;
@@ -70,6 +77,9 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
     this._canvasdiv.style.width = "100%";
     this._canvasdiv.style.height = "100%";
     this._viewer.canvas.appendChild(this._canvasdiv);
+
+    this.resizeOnlyOnWitdhChange = resizeOnWidthChange;
+    this.windowWidth = 0;
 
     this._canvas = document.createElement("canvas");
 
@@ -113,26 +123,37 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
     /**
      * Update viewport
      */
-    this._viewer.addHandler("update-viewport", function () {
-      self.resize();
-      self.resizeCanvas();
-      self.render();
+
+    this._viewer.addHandler("update-viewport", function ()  {
+      if (self.resizeOnlyOnWitdhChange && self.windowWidth === window.innerWidth) {
+        return;
+      } else {
+        self.resize();
+        self.resizeCanvas();
+        self.render();
+
+        self.windowWidth = window.innerWidth
+      }
     });
 
     /**
      * Resize the fabric.js overlay when the viewer or window changes size
      */
     this._viewer.addHandler("open", function () {
-      console.log('open');
-
       self.resize();
       self.resizeCanvas();
     });
-    window.addEventListener("resize", function () {
-      // console.log('addEventListenerresize');
+    let resizeWindowWidth = 0;
 
-      self.resize();
-      self.resizeCanvas();
+    window.addEventListener("resize", function () {
+      if (self.resizeOnlyOnWitdhChange && self.windowWidth === window.innerWidth) {
+        return;
+      } else {
+        self.resize();
+        self.resizeCanvas();
+
+        self.windowWidth = window.innerWidth
+      }
     });
   };
 
@@ -180,7 +201,7 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
       let origin = new OpenSeadragon.Point(0, 0);
       let viewportZoom = this._viewer.viewport.getZoom(true);
       let viewportToImageZoom =
-        this._viewer.viewport.viewportToImageZoom(viewportZoom);
+          this._viewer.viewport.viewportToImageZoom(viewportZoom);
       this._fabricCanvas.setWidth(this._containerWidth);
       this._fabricCanvas.setHeight(this._containerHeight);
 
@@ -191,7 +212,7 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
       this._fabricCanvas.setZoom(viewportToImageZoom);
 
       let viewportWindowPoint =
-        this._viewer.viewport.viewportToWindowCoordinates(origin);
+          this._viewer.viewport.viewportToWindowCoordinates(origin);
       let x = viewportWindowPoint.x;
       let y = viewportWindowPoint.y;
       let canvasOffset = this._canvasdiv.getBoundingClientRect();
@@ -199,10 +220,10 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
       let pageScroll = OpenSeadragon.getPageScroll();
 
       this._fabricCanvas.absolutePan(
-        new fabric.Point(
-          canvasOffset.left - x + pageScroll.x,
-          canvasOffset.top - y + pageScroll.y
-        )
+          new fabric.Point(
+              canvasOffset.left - x + pageScroll.x,
+              canvasOffset.top - y + pageScroll.y
+          )
       );
     },
   };
