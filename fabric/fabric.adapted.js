@@ -8917,7 +8917,7 @@ fabric.ElementsParser = function (elements, callback, options, reviver, parsingO
      * @type Boolean
      * @default
      */
-    enableRetinaScaling: true,
+    enableRetinaScaling: false,
 
     /**
      * Describe canvas element extension over design
@@ -18502,6 +18502,92 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     };
 
   }
+
+})(typeof exports !== 'undefined' ? exports : this);
+(function (global) {
+
+  'use strict';
+
+  var fabric = global.fabric || (global.fabric = {}),
+      extend = fabric.util.object.extend,
+      clone = fabric.util.object.clone,
+      coordProps = {x1: 1, x2: 1, y1: 1, y2: 1};
+
+  if (fabric.LineArrow) {
+    fabric.warn('fabric.LineArrow is already defined');
+    return;
+  }
+
+  /**
+   * Line class
+   * @class fabric.LineArrow
+   * @extends fabric.Object
+   * @see {@link fabric.Line#initialize} for constructor definition
+   */
+  fabric.LineArrow = fabric.util.createClass(fabric.Line, {
+
+    type: 'lineArrow',
+
+    initialize: function(element, options) {
+      options || (options = {});
+      this.callSuper('initialize', element, options);
+    },
+
+    toObject: function() {
+      return fabric.util.object.extend(this.callSuper('toObject'));
+    },
+
+    _render: function(ctx) {
+      this.callSuper('_render', ctx);
+      // do not render if width/height are zeros or object is not visible
+      if (this.width === 0 || this.height === 0 || !this.visible) {
+        return;
+      }
+      ;
+
+      ctx.save();
+// end arrow
+      let xDiff = this.x2 - this.x1;
+      let yDiff = this.y2 - this.y1;
+      let angle = Math.atan2(yDiff, xDiff);
+      ctx.translate((this.x2 - this.x1) / 2, (this.y2 - this.y1) / 2);
+      ctx.rotate(angle);
+      ctx.beginPath();
+      // move 10px in front of line to start the arrow so it does not have the square line end showing in front (0,0)
+      ctx.moveTo(10, 0);
+      ctx.lineTo(-10 * this.scaleFactor, 7.5 * this.scaleFactor);
+      ctx.lineTo(-10 * this.scaleFactor, -7.5 * this.scaleFactor);
+      ctx.closePath();
+      ctx.fillStyle = this.stroke;
+      ctx.fill();
+
+      ctx.restore();
+      ctx.save();
+// start arrow
+      xDiff = -this.x2 + this.x1;
+      yDiff = -this.y2 + this.y1;
+      angle = Math.atan2(yDiff, xDiff);
+      ctx.translate(-((this.x2 - this.x1) / 2), -((this.y2 - this.y1) / 2));
+      ctx.rotate(angle);
+      ctx.beginPath();
+      // move 10px in front of line to start the arrow so it does not have the square line end showing in front (0,0)
+      ctx.moveTo(10, 0);
+      ctx.lineTo(-10 * this.scaleFactor, 7.5 * this.scaleFactor);
+      ctx.lineTo(-10 * this.scaleFactor, -7.5 * this.scaleFactor);
+      ctx.closePath();
+      ctx.fillStyle = this.stroke;
+      ctx.fill();
+
+      ctx.restore();
+
+    },
+  });
+
+  fabric.LineArrow.fromObject = function (object, callback) {
+    callback && callback(new fabric.LineArrow([object.x1, object.y1, object.x2, object.y2],object));
+  };
+
+  fabric.LineArrow.async = true;
 
 })(typeof exports !== 'undefined' ? exports : this);
 (function (global) {
