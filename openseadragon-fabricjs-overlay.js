@@ -144,9 +144,9 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
       self.resize();
       self.resizeCanvas();
     });
-    let resizeWindowWidth = 0;
 
-    window.addEventListener("resize", function () {
+    let resizeWindowWidth = 0;
+    const resizeHandlerFunc = function() {
       if (self.resizeOnlyOnWitdhChange && self.windowWidth === window.innerWidth) {
         return;
       } else {
@@ -155,7 +155,11 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
 
         self.windowWidth = window.innerWidth
       }
-    });
+    }
+
+    this.resizeHandler = resizeHandlerFunc.bind(this);
+
+    window.addEventListener("resize", this.resizeHandler);
   };
 
   /**
@@ -168,6 +172,11 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
    * render: Overlay.render}}
    */
   Overlay.prototype = {
+
+    clearAllEventListeners: function () {
+      window.removeEventListener('resize', this.resizeHandler)
+      this._viewer.removeAllHandlers();
+    },
     // ----------
     canvas: function () {
       return this._canvas;
