@@ -34,7 +34,7 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
    */
   OpenSeadragon.Viewer.prototype.fabricjsOverlay = function (options) {
 
-    this._fabricjsOverlayInfo = new Overlay(this, options.static, options.containerClass, options.zIndex, options.resizeOnWidthChange, options.offSetLeft);
+    this._fabricjsOverlayInfo = new Overlay(this, options.static, options.containerClass, options.zIndex, options.resizeOnWidthChange, options.offSetLeft, options.offSetTop);
     if (options && options.scale) {
       this._fabricjsOverlayInfo._scale = options.scale; // arbitrary scale for created fabric canvas
     } else {
@@ -61,7 +61,7 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
    * @param viewer
    * @constructor
    */
-  let Overlay = function (viewer, staticCanvas, overlayId, zIndex, resizeOnWidthChange, offSetLeft) {
+  let Overlay = function (viewer, staticCanvas, overlayId, zIndex, resizeOnWidthChange, offSetLeft, offSetTop) {
     let self = this;
 
     this._viewer = viewer;
@@ -72,7 +72,8 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
     this._canvasdiv.setAttribute("id", overlayId)
     this._canvasdiv.style.position = "absolute";
     this._canvasdiv.style.zIndex = zIndex || 1;
-    this._canvasdiv.style.left = offSetLeft + "px";
+    this._canvasdiv.style.left = (offSetLeft || 0) + 'px';
+    this._canvasdiv.style.top = (offSetTop || 0)  + 'px';
     this._canvasdiv.style.top = "0px";
     this._canvasdiv.style.width = "100%";
     this._canvasdiv.style.height = "100%";
