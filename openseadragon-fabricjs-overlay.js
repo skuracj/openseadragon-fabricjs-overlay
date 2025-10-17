@@ -74,7 +74,6 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
     this._canvasdiv.style.zIndex = zIndex || 1;
     this._canvasdiv.style.left = (offSetLeft || 0) + 'px';
     this._canvasdiv.style.top = (offSetTop || 0)  + 'px';
-    this._canvasdiv.style.top = "0px";
     this._canvasdiv.style.width = "100%";
     this._canvasdiv.style.height = "100%";
     this._viewer.canvas.appendChild(this._canvasdiv);
@@ -87,6 +86,7 @@ module.exports = function initFabricJSOverlay(OpenSeadragon, fabric) {
     this._id = "osd-overlaycanvas-" + counter();
     this._canvas.setAttribute("id", this._id);
     this._canvas.style.left = offSetLeft + "px";
+    this._canvas.style.top = offSetTop + "px";
     this._canvasdiv.appendChild(this._canvas);
     this.resize();
 
